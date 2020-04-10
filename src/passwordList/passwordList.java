@@ -13,60 +13,59 @@ public class passwordList {
         List<String> keywords = new ArrayList<>();
         Scanner input = new Scanner(System.in);
         String keyword;
+        String generatedPassword;
         int i = 1;
         int counter = 0;
+        int minimumPossibleLength = 6;
+        int maximumPossibleLength;
 
         System.out.println(
                 "Create your own password list!\n" +
-                "Enter your keywords then enter \"\\finished\":"
+                        "Enter your keywords then enter \"\\finished\":"
         );
 
-        while(true){ // this will break when user enters \finished as keyword
+        while (true) { // this will break when user enters \finished as keyword
             System.out.print(i + ": ");
             keyword = input.nextLine();
 
-            if(keyword.equals("")){
+            if (keyword.equals("")) {
                 System.out.println("Please Enter Something!");
                 continue;
-            }
-            else if(keyword.equals("\\finished")) break;
+            } else if (keyword.equals("\\finished")) break;
 
             i++;
 
             keywords.add(keyword);
         }
 
+        System.out.print("Please enter the maximum possible length of the password: ");
+        while (true) {
+            try {
+                maximumPossibleLength = Integer.parseInt(input.nextLine());
+                break;
+            } catch (Exception e) {
+                System.out.print("Please enter an integer for maximum possible length: ");
+            }
+        }
+
         try {
             PrintWriter writer = new PrintWriter("customPasswords.list", StandardCharsets.UTF_8);
 
-            for (String first: keywords) {
-                writer.println(first);
-                counter++;
-            }
-
-            for (String firstLoop: keywords) {
-
-                for (String secondLoop: keywords) {
-                    if(!firstLoop.equals(secondLoop)) {
-                        writer.println(firstLoop + secondLoop);
-                        counter++;
-                    }
+            for (String firstLoop : keywords) {
+                generatedPassword = firstLoop;
+                if (generatedPassword.length() >= minimumPossibleLength && generatedPassword.length() <= maximumPossibleLength) {
+                    writer.println(generatedPassword);
+                    counter++;
                 }
             }
 
 
-            for (String firstLoop: keywords) {
-
-                for (String secondLoop: keywords) {
-
-                    for (String thirdLoop: keywords) {
-
-                        if(
-                                !firstLoop.equals(secondLoop) &&
-                                !firstLoop.equals(thirdLoop) &&
-                                !secondLoop.equals(thirdLoop)
-                        ) {
-                            writer.println(firstLoop + secondLoop + thirdLoop);
+            for (String firstLoop : keywords) {
+                for (String secondLoop : keywords) {
+                    if (!firstLoop.equals(secondLoop)) {
+                        generatedPassword = firstLoop + secondLoop;
+                        if (generatedPassword.length() >= minimumPossibleLength && generatedPassword.length() <= maximumPossibleLength) {
+                            writer.println(generatedPassword);
                             counter++;
                         }
                     }
@@ -74,23 +73,17 @@ public class passwordList {
             }
 
 
-            for (String firstLoop: keywords) {
-
-                for (String secondLoop: keywords) {
-
-                    for (String thirdLoop: keywords) {
-
-                        for (String forthLoop: keywords) {
-
-                            if(
-                                    !firstLoop.equals(secondLoop) &&
-                                    !firstLoop.equals(thirdLoop) &&
-                                    !firstLoop.equals(forthLoop) &&
-                                    !secondLoop.equals(thirdLoop) &&
-                                    !secondLoop.equals(forthLoop) &&
-                                    !thirdLoop.equals(forthLoop)
-                            ) {
-                                writer.println(firstLoop+secondLoop+thirdLoop+forthLoop);
+            for (String firstLoop : keywords) {
+                for (String secondLoop : keywords) {
+                    for (String thirdLoop : keywords) {
+                        if (
+                                !firstLoop.equals(secondLoop) &&
+                                        !firstLoop.equals(thirdLoop) &&
+                                        !secondLoop.equals(thirdLoop)
+                        ) {
+                            generatedPassword = firstLoop + secondLoop + thirdLoop;
+                            if (generatedPassword.length() >= minimumPossibleLength && generatedPassword.length() <= maximumPossibleLength) {
+                                writer.println(generatedPassword);
                                 counter++;
                             }
                         }
@@ -98,41 +91,68 @@ public class passwordList {
                 }
             }
 
-//          for (String firstLoop : keywords) {
-//
-//              for (String secondLoop : keywords) {
-//
-//                  for (String thirdLoop : keywords) {
-//
-//                      for (String forthLoop : keywords) {
-//
-//                          for (String fifthLoop : keywords) {
-//
-//                              if(!firstLoop.equals(secondLoop) &&
-//                                      !firstLoop.equals(thirdLoop) &&
-//                                      !firstLoop.equals(forthLoop) &&
-//                                      !firstLoop.equals(fifthLoop) &&
-//                                      !secondLoop.equals(thirdLoop) &&
-//                                      !secondLoop.equals(forthLoop) &&
-//                                      !secondLoop.equals(fifthLoop) &&
-//                                      !thirdLoop.equals(forthLoop) &&
-//                                      !thirdLoop.equals(fifthLoop) &&
-//                                      !forthLoop.equals(fifthLoop)
-//                              ) {
-//                                  writer.println(firstLoop+secondLoop+thirdLoop+forthLoop+fifthLoop);
-//                                  counter++;
-//                              }
-//                          }
-//                      }
-//                  }
-//              }
-//          }
+
+            for (String firstLoop : keywords) {
+                for (String secondLoop : keywords) {
+                    for (String thirdLoop : keywords) {
+                        for (String forthLoop : keywords) {
+                            if (
+                                    !firstLoop.equals(secondLoop) &&
+                                            !firstLoop.equals(thirdLoop) &&
+                                            !firstLoop.equals(forthLoop) &&
+                                            !secondLoop.equals(thirdLoop) &&
+                                            !secondLoop.equals(forthLoop) &&
+                                            !thirdLoop.equals(forthLoop)
+                            ) {
+                                generatedPassword = firstLoop + secondLoop + thirdLoop + forthLoop;
+                                if (generatedPassword.length() >= minimumPossibleLength && generatedPassword.length() <= maximumPossibleLength) {
+                                    writer.println(generatedPassword);
+                                    counter++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            /*
+            * If you use less than 10 keywords, it's recommended to uncomment these lines to generate more possible passwords!
+            */
+//            for (String firstLoop : keywords) {
+//                for (String secondLoop : keywords) {
+//                    for (String thirdLoop : keywords) {
+//                        for (String forthLoop : keywords) {
+//                            for (String fifthLoop : keywords) {
+//                                if (
+//                                        !firstLoop.equals(secondLoop) &&
+//                                                !firstLoop.equals(thirdLoop) &&
+//                                                !firstLoop.equals(forthLoop) &&
+//                                                !firstLoop.equals(fifthLoop) &&
+//                                                !secondLoop.equals(thirdLoop) &&
+//                                                !secondLoop.equals(forthLoop) &&
+//                                                !secondLoop.equals(fifthLoop) &&
+//                                                !thirdLoop.equals(forthLoop) &&
+//                                                !thirdLoop.equals(fifthLoop) &&
+//                                                !forthLoop.equals(fifthLoop)
+//                                ) {
+//                                    generatedPassword = firstLoop + secondLoop + thirdLoop + forthLoop + fifthLoop;
+//                                    if (generatedPassword.length() >= minimumPossibleLength && generatedPassword.length() <= maximumPossibleLength) {
+//                                        writer.println(generatedPassword);
+//                                        counter++;
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+
             writer.close();
 
-          System.out.println("Number of created passwords: " + counter);
+            System.out.println("Number of created passwords: " + counter);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
