@@ -12,6 +12,7 @@ public class passwordList {
 
         List<String> keywords = new ArrayList<>();
         Scanner input = new Scanner(System.in);
+        String filename = "customPasswords.list";
         String keyword;
         String generatedPassword;
         int i = 1;
@@ -39,7 +40,7 @@ public class passwordList {
         }
 
         System.out.print("Please enter the maximum possible length of the password: ");
-        while (true) {
+        while (true) { // this will break when user enters a valid integer!
             try {
                 maximumPossibleLength = Integer.parseInt(input.nextLine());
                 break;
@@ -49,7 +50,7 @@ public class passwordList {
         }
 
         try {
-            PrintWriter writer = new PrintWriter("customPasswords.list", StandardCharsets.UTF_8);
+            PrintWriter writer = new PrintWriter(filename, StandardCharsets.UTF_8); // if a file with the same name exists, it'll override the previous file
 
             for (String firstLoop : keywords) {
                 generatedPassword = firstLoop;
